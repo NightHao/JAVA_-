@@ -28,7 +28,7 @@ public class SortFrame extends JFrame {
 	private static final String[] names2 = {"RandomArray","ExampleArray","ReadArray","InputArray"};
 	private Boolean usingName = false,usingName2 = false,showImg = false;
 	private String T1,T2;// 捕捉combobox的狀態
-	private JButton increaseButton,decreaseButton,generateArray,RunButton,animation,left,right,changeSpeedL,goToIt,changeSpeedR; // button to decrease font size
+	private JButton increaseButton,decreaseButton,generateArray,RunButton,animation,left,right,changeSpeedL,goToIt,changeSpeedR, recordTime; // button to decrease font size
 	private JTextArea inputText,outputText; // displays example text
 	private int fontSize = 20, index = 0, it = 0, sizeOfAnimateArray,nTime = 500; // current font size
 	private newArray Array;
@@ -39,7 +39,8 @@ public class SortFrame extends JFrame {
 	private JTextField changeIt = new JTextField("0");
 	private JLabel nowTime = new JLabel("/0"), sec = new JLabel("Seconds"), step = new JLabel("Step");
 	private JPanel bottomJPanel1, bottomJPanel2, bottomJPanel3, bottomJPanel4, sJPanel;
-
+	private String[] rT = new String[10]; 
+	private int records;
 	public SortFrame() {
 		super("Sort Frame Test");
 		sJPanel= new JPanel();
@@ -67,6 +68,8 @@ public class SortFrame extends JFrame {
 		goToIt = new JButton("Click to see the step or press 'Enter'");
 		changeSpeedL = new JButton("－");
 		changeSpeedR = new JButton("＋");
+		recordTime = new JButton("Record");
+		recordTime.addActionListener(handler);
 		generateArray.addActionListener(handler);
 		RunButton.addActionListener(handler);
 		changeSpeedL.addActionListener(handler);
@@ -133,6 +136,7 @@ public class SortFrame extends JFrame {
 		panel.add(decreaseButton);
 		panel.add(imagesJComboBox); // add combobox to JFrame
 		panel.add(imagesJComboBox2); // add combobox to JFrame
+		panel.add(recordTime);
 		sJPanel.add(panel); // add buttons at top
 		sJPanel.add(inpanel); // allow scrolling
 		sJPanel.add(outpanel); // allow scrolling
@@ -201,6 +205,19 @@ public class SortFrame extends JFrame {
 				}
 				outputText.setText(Gogo.getOutput());
 				setAnimateImg();
+				Double totalTime = Gogo.getTime();
+				int aSwap = Gogo.swapTime();
+				int aSize = Array.getArraySize();
+				if(records < 10){
+					rT[records] = String.format("Type: %s   Size: %d   SwapTime: %d   Time: %f seconds",T1,aSize,aSwap,totalTime);
+					records++;
+				}
+				else{
+					records = 0;
+					for(int i = 0; i < 10; ++i){
+						rT[i] = "";
+					}
+				}
 			}
 		}
 		public void judgeInput(){
@@ -322,6 +339,12 @@ public class SortFrame extends JFrame {
 			}
 			if(e.getSource()==goToIt){
 				checkGo();
+			}
+			if(e.getSource()==recordTime){
+				RecordFrame recordUI = new RecordFrame(rT,records);
+				recordUI.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				recordUI.setSize(600, 450); // set frame size
+				recordUI.setVisible(true); // display frame
 			}
 		}
 

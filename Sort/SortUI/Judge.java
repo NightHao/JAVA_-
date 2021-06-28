@@ -1,6 +1,39 @@
-
 public class Judge{
+	private newArray tmpArr;
 	//之後有任何需要判斷的檔案麻煩寫在這裡
+	public Boolean stringIsMatrix(String n){
+		//先切割成多行
+		String tmp = "";
+		int l=0;
+		for(int i=0;i<n.length();++i){
+			if(n.charAt(i)!=' '&&n.charAt(i)!='-'&&n.charAt(i)!='\n'){
+				if(n.charAt(i)>'9'||n.charAt(i)<'0'){
+					return false;
+				}
+			}
+			if(n.charAt(i)!='\n'){
+				tmp+=n.charAt(i);
+			}
+			else{
+				//若有任何一行不是陣列，回傳否
+				if(stringIsArray(tmp)==false)return false;
+				tmpArr = new newArray(tmp);
+				//若有任何一行數量不一樣，回傳否
+				if(l==0){
+					l=tmpArr.getArraySize();
+				}
+				else if(l!=tmpArr.getArraySize()){
+					return false;
+				}
+				if(tmpArr.getArraySize()==0){
+					return false;
+				}
+				tmp = "";
+			}
+		}
+		return true;
+	}
+
 	//判斷字串是否為array
 	public Boolean stringIsArray(String n){
 		//不能有0-9,"-"," "以外的字符

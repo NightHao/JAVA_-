@@ -6,6 +6,7 @@ public abstract class Sort{
 	private String output;
 	Boolean firstTime;//紀錄是否有算過max和min
 	private Judge JJ=new Judge();
+	private Double totalTime;
 	//說明文件
 	public abstract String doc();
 	//就是get name
@@ -44,6 +45,7 @@ public abstract class Sort{
 		time1 = System.currentTimeMillis();
 		tmpArr = runTest(tmpArr);
 		time2 = System.currentTimeMillis();
+		totalTime = time2-time1;
 		printArr(tmpArr);
 		if(JJ.canDraw(swapTime(), arr.length)==true){
 			sortStepArr = sortStep(swapTime(),tmp2Arr);
@@ -82,5 +84,7 @@ public abstract class Sort{
 		}
 		sortStepArr[it]=t;
 	}
-
+	public Double getTime(){
+		return totalTime;
+	}
 }
