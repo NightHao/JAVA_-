@@ -3,6 +3,35 @@ public class new2DArray {
 	private int[][] My2DArr/*,Color*/;
     //也可以像Set直接丟陣列產生
 
+    //將字串切成字串陣列後再放入
+    public new2DArray(String A){
+        int l=0;
+        for(int i=0;i<A.length();++i){
+            if(A.charAt(i)=='\n')++l;
+        }
+        String[] B = new String [l];
+        for(int i=0,k=0;i<A.length();++i){
+            if(A.charAt(i)=='\n')++k;
+            else B[k]+=A.charAt(i);
+        }
+        newArray tmp = new newArray(B[0]);
+        ColSize = tmp.getArraySize();
+        RowSize = B.length;//不可有多餘換行
+        int mi = Integer.MAX_VALUE, ma = Integer.MIN_VALUE;
+        int[][] tmp2DArr = new int[RowSize][ColSize];
+        for ( int i = 0 ; i < RowSize ; ++i){
+            tmp = new newArray(B[i]);
+            ColSize = tmp.getArraySize();
+            tmp2DArr[i] = new int[ColSize];
+            tmp2DArr[i] = tmp.getArray();
+            mi = Math.min(mi, tmp.getLowerRange());
+            ma = Math.max(ma, tmp.getUpperRange()); 
+        }
+        My2DArr = tmp2DArr;
+        My2DArraySize = ColSize * RowSize;
+        LowerRange = mi;
+        UpperRange = ma;
+    }
     //當讀入合法陣列時也可以轉成new2DArray
     //請先使用judge中的stringIsArray判斷格式是否正確
     public new2DArray(String A[]){

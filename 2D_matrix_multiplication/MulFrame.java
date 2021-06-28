@@ -23,7 +23,7 @@ public class MulFrame extends JFrame {
 	private Judge JJ = new Judge();//當有任何需要判斷的情況請盡量使用他
 	private final JComboBox<String> imagesJComboBox,imagesJComboBox2; // hold icon names
 	private static final String[] names = {"Naive","Sparse","Strassen"};
-	private static final String[] names2 = {"RandomMatrix","ExampleMatrix"/*"ReadMatrix",*//*"InputMatrix"*/};
+	private static final String[] names2 = {"RandomMatrix","ExampleMatrix"/*"ReadMatrix",*/,"InputMatrix"};
 	private Boolean usingName = false,usingName2 = false;
 	private String T1,T2;// 捕捉combobox的狀態
 	private JButton increaseButton,decreaseButton,generateMatrix,RunButton; // button to decrease font size
@@ -42,10 +42,10 @@ public class MulFrame extends JFrame {
 		imagesJComboBox = new JComboBox<String>(names); // set up JComboBox
 		imagesJComboBox2 = new JComboBox<String>(names2); // set up JComboBox
       	imagesJComboBox.setMaximumRowCount(3); // display three rows
-		imagesJComboBox2.setMaximumRowCount(2); // display three rows
+		imagesJComboBox2.setMaximumRowCount(3); // display three rows
 		ItemListener handler1 = new EventListner();
 		ItemListener handler2 = new EventListner();
-		imagesJComboBox.addItemListener(handler1); 
+		imagesJComboBox.addItemListener(handler1);
 		imagesJComboBox2.addItemListener(handler2); 
 		imagesJComboBox.setSelectedIndex(1); // 改變選項時才偵測,且一開始為0
 		imagesJComboBox2.setSelectedIndex(1);// 直接改預設值先讓其跑一次
@@ -128,6 +128,7 @@ public class MulFrame extends JFrame {
 			System.out.println("You choose "+T2);
 			//"RandomMatrix","ExampleMatrix","ReadMatrix","InputMatrix"
 			if(T2=="RandomMatrix"){
+				generateMatrix.setText("Generate Matrix");
 				//參考generateRandomArrayTest
 				//int RowSize, int ColSize, int LowerRange, int UpperRange
 				String sr=JOptionPane.showInputDialog("Input the row size of your matrix A");
@@ -155,6 +156,7 @@ public class MulFrame extends JFrame {
 				inputText.setText(stText);
 			}
 			else if(T2=="ExampleMatrix"){
+				generateMatrix.setText("Generate Matrix");
 				//int[][] Example2DArray = {{1,50,66,-11,5}, {5,6,11,20,8}};
 				int[][] Ex2 = {{5,6},{-3,8},{9,4},{6,3},{1,0}};
 				generate2DExampleArray tmp = new generate2DExampleArray();
@@ -171,26 +173,42 @@ public class MulFrame extends JFrame {
 				Array = new newArray(tmp.run());
 				inputText.setText(Array.toString());
 			}*/
-			/*else if(T2=="InputMatrix"){
-				if (generateArray.getText() == "NEW Generate Array") {
+			else if(T2=="InputMatrix"){
+				if (generateMatrix.getText() == "NEW Generate A Matrix") {
 					String words = inputText.getText();
-					if(JJ.stringIsArray(words)){
-						Array = new newArray(words);
-						inputText.setText(Array.toString());
-						generateArray.setText("Generate Array");
-						inputText.setEditable(false);
+					if(words.charAt(words.length()-1)!='\n')words+='\n';//最後補換行
+					if(JJ.stringIsMatrix(words)){
+						Array = new new2DArray(words);
+						inputText.setText("");
+						generateMatrix.setText("NEW Generate B Matrix");
 					}
 					else{
-						inputText.setText("Input string is not an array! Please try again.");
+						inputText.setText("Input string is not a legal matrix! Please try again.");
 					}
 					//System.out.println(words);
 				}
-				else if (generateArray.getText() == "Generate Array") {
-					generateArray.setText("NEW Generate Array");
+				else if(generateMatrix.getText() == "NEW Generate B Matrix"){
+					String words = inputText.getText();
+					if(words.charAt(words.length()-1)!='\n')words+='\n';//最後補換行
+					if(JJ.stringIsMatrix(words)){
+						Array2 = new new2DArray(words);
+						inputText.setText("");
+						generateMatrix.setText("Generate Matrix");
+						String stText="";
+						stText += "Matrix A:\n" + Array.toString() + "\nMatrix B:\n" + Array2.toString();
+						inputText.setText(stText);
+						inputText.setEditable(false);
+					}
+					else{
+						inputText.setText("Input string is not a legal matrix! Please try again.");
+					}
+				}
+				else if (generateMatrix.getText() == "Generate Matrix") {
+					generateMatrix.setText("NEW Generate A Matrix");
 					inputText.setText("");
 					inputText.setEditable(true);
 				}
-			}*/
+			}
 		}
 		public void actionPerformed(ActionEvent e){//當Button被按到時
 			if(e.getSource()==generateMatrix){//產生陣列

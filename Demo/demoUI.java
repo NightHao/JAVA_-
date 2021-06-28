@@ -1,38 +1,34 @@
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicTreeUI.TreeCancelEditingAction;
-import javax.swing.JComboBox;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.Color;
 
 public class demoUI extends JFrame{
+    
     private JButton sortButton, mulButton;
+
     public demoUI(){
         super("Demo");
+
         EventListner handler = new EventListner();
         sortButton = new JButton("SORT");
         mulButton = new JButton("MUL");
         sortButton.addActionListener(handler);
         mulButton.addActionListener(handler);
         setLayout(new GridLayout(1,2));
+        sortButton.setForeground(Color.white);
+        sortButton.setBackground(Color.blue);
+        Font f = new Font("微軟正黑體",Font.BOLD, 36);
+        sortButton.setFont(f);
+        mulButton.setForeground(Color.white);
+        mulButton.setBackground(Color.red);
+        mulButton.setFont(f);
         add(sortButton);
         add(mulButton);
+        
     }
     private class EventListner implements ActionListener{
 
