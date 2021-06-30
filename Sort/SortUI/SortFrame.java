@@ -209,7 +209,7 @@ public class SortFrame extends JFrame {
 				int aSwap = Gogo.swapTime();
 				int aSize = Array.getArraySize();
 				if(records < 10){
-					rT[records] = String.format("Type: %s   Size: %d   SwapTime: %d   Time: %f seconds",T1,aSize,aSwap,totalTime);
+					rT[records] = String.format("Type: %s   Size: %d   SwapTime: %d   Time: %f milliseconds",T1,aSize,aSwap,totalTime);
 					records++;
 				}
 				else{
